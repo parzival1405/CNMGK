@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="/update" method="POST" enctype="multipart/form-data">
+        <input name="ma_sp" value="<%= SanPhams.MaSp%>" placeholder="Nhap ma san pham" />
+        <input name="ten_sp" value="<%= SanPhams.TenSp%>" placeholder="Nhap ten san pham" />
+        <input name="so_luong" value="<%= SanPhams.SoLuong%>"" placeholder="Nhap sl san pham" />
+        <input type="submit" value="update san pham" />
+      </form>
+</body>
+
+</html>

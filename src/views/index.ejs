@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/" method="POST" enctype="multipart/form-data">
+      <input name="ma_sp" placeholder="Nhap ma san pham" />
+      <input name="ten_sp" placeholder="Nhap ten san pham" />
+      <input name="so_luong" placeholder="Nhap sl san pham" />
+      <input type="submit" value="Them moi san pham" />
+      <input type="file" name="image"/>
+    </form>
+    <form action="/delete" method="post" enctype="multipart/form-data">
+        <div>danh sach san pham </div>
+        <input type="submit" value="xoa">
+        <table>
+            <tr>
+              <th>Ma SP</th>
+              <th>Ten SP</th>
+              <th>So Luong</th>
+              <th>Hinh Anh</th>
+              <th>action</th>
+              <th>Chon</th>
+            </tr>
+            <% for(var i=0; i< SanPhams.length; i++) { %>
+              <tr>
+                  <td><%= SanPhams[i].MaSp%></td>
+                  <td><%= SanPhams[i].TenSp%></td>
+                  <td><%= SanPhams[i].SoLuong%></td>
+                  <td><img width="50px" src="<%= SanPhams[i].Image_URL%>"/></td>
+                  <td><a href="/product/<%= SanPhams[i].MaSp%>">update</a></td>
+                  <td><input type="checkbox" name="<%= SanPhams[i].MaSp%>"></td>
+                </tr>
+            <% } %>
+          </table>
+    </form>
+  </body>
+</html>
