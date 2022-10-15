@@ -7,41 +7,36 @@ const AWS = require("aws-sdk");
 const {v4:uuid} = require("uuid")
 require("dotenv").config();
 
+
 app.set("views", path.join(__dirname, "./src/views"));
 app.set("view engine", "ejs");
 const tableName = "HuuSanPham";
-
 const CLOUD_FRONT_URL = 'https://d9eqr85kdk53r.cloudfront.net/'
-
 const S3 = new AWS.S3({
   accessKeyId: process.env.accessKeyId,
   secretAccessKey: process.env.secretAccessKey
 })
-
 const config = new AWS.Config({
   accessKeyId: process.env.accessKeyId,
   secretAccessKey: process.env.secretAccessKey,
   region: process.env.region,
 });
-
 AWS.config = config;
 const docClient = new AWS.DynamoDB.DocumentClient();
-
 const storage = multer.memoryStorage({
   destination(req,file,callback){
     callback(null,'')
   }
 })
-
 const checkFileType = (file,cb)=>{
   const fileTypes = /jpeg|jpg|png|gif/
 
   const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
-  const minetype = fileTypes.test(file.mimetype);
+  const mimetype = fileTypes.test(file.mimetype);
 
-  console.log(minetype,extname)
+  console.log(mimetype,extname)
 
-  if(extname && minetype){
+  if(extname && mimetype){
     return cb(null,true)
   }
 
@@ -113,14 +108,14 @@ app.get('/product/:id', (req, res) => {
     const params = {
         TableName: tableName,
         Key:{
-            MaSp
+            MaSp:parseInt(MaSp)
         }
       };
-      docClient.scan(params, (err, data) => {
+      docClient.get(params, (err, data) => {
         if (err) {
-          res.send("err");
+          res.send(err);
         } else {
-          return res.render("product.ejs", { SanPhams: data.Items[0] });
+          return res.render("product.ejs", { SanPhams: data.Item });
         }
       });
 })
